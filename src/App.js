@@ -26,6 +26,15 @@ const App = () => {
     setTintColor(e.target.value);
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setJsonInput(event.target.result);
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="app-container">
       <div className="table-container">
@@ -41,13 +50,16 @@ const App = () => {
           <option value="radio">Table with Radio Button</option>
           <option value="sorting">Table with Sorting</option>
         </select>
-        <input
-          style={{ marginTop: "10px" }}
-          type="color"
-          value={tintColor}
-          onChange={handleTintColorChange}
-          placeholder="Choose tint color"
-        />
+        <div style={{ padding: "20px" }}>
+          <input type="file" onChange={handleFileChange} accept=".json" />
+          <input
+            style={{ marginTop: "10px" }}
+            type="color"
+            value={tintColor}
+            onChange={handleTintColorChange}
+            placeholder="Choose tint color"
+          />
+        </div>
         <button onClick={handleGenerateTable}>Generate Table</button>
         {tableData.length > 0 ? (
           <>
